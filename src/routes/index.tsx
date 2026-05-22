@@ -1,25 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import heroImg from "@/assets/hero-gym.jpg";
-import g1 from "@/assets/gallery-1.jpg";
-import g2 from "@/assets/gallery-2.jpg";
-import g3 from "@/assets/gallery-3.jpg";
-import g4 from "@/assets/gallery-4.jpg";
-import coach1 from "@/assets/coach-1.jpg";
-import coach2 from "@/assets/coach-2.jpg";
+import retailImg from "@/assets/retail.jpg";
 import {
   Dumbbell,
   MapPin,
-  Clock,
-  Mail,
-  Instagram,
   Phone,
   Check,
-  Flame,
+  TrendingUp,
+  ShoppingCart,
   Coffee,
-  Trophy,
-  Users,
-  Zap,
-  ArrowRight,
+  Utensils,
+  Mail,
+  Instagram,
+  ExternalLink,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -28,32 +22,40 @@ export const Route = createFileRoute("/")({
 
 const WA_LINK = "https://wa.me/62896740901212";
 const IG_LINK = "https://instagram.com/satriogymsmg";
+const MAPS_LINK = "https://maps.google.com/?q=Satrio+Fitness+Club+Pedurungan";
 
 function Nav() {
+  const links = [
+    { label: "Home", href: "#top" },
+    { label: "Pricing", href: "#pricing" },
+    { label: "PT", href: "#pt" },
+    { label: "Retail", href: "#retail" },
+    { label: "Location", href: "#contact" },
+  ];
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/70 border-b border-border">
+    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/80 border-b border-border">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16">
-        <a href="#top" className="flex items-center gap-2">
-          <div className="size-9 grid place-items-center bg-primary text-primary-foreground">
-            <Dumbbell className="size-5" strokeWidth={2.5} />
-          </div>
-          <span className="font-display text-2xl tracking-wider">SATRIO<span className="text-primary">.</span>GYM</span>
+        <a href="#top" className="font-display text-2xl tracking-wider text-primary">
+          SATRIO GYM
         </a>
-        <nav className="hidden md:flex items-center gap-8 text-sm font-semibold uppercase tracking-wider">
-          <a href="#about" className="hover:text-primary transition">Tentang</a>
-          <a href="#gallery" className="hover:text-primary transition">Galeri</a>
-          <a href="#pricing" className="hover:text-primary transition">Harga</a>
-          <a href="#coach" className="hover:text-primary transition">Coach</a>
-          <a href="#contact" className="hover:text-primary transition">Kontak</a>
+        <nav className="hidden md:flex items-center gap-8 text-sm font-semibold">
+          {links.map((l, i) => (
+            <a
+              key={l.label}
+              href={l.href}
+              className={`hover:text-primary transition ${i === 0 ? "text-primary underline underline-offset-8" : "text-foreground"}`}
+            >
+              {l.label}
+            </a>
+          ))}
         </nav>
         <a
           href={WA_LINK}
           target="_blank"
           rel="noreferrer"
-          className="hidden sm:inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 font-bold uppercase text-sm tracking-wider hover:bg-primary/90 transition"
+          className="bg-primary text-primary-foreground px-4 py-2 font-bold uppercase text-xs tracking-widest hover:bg-primary/90 transition"
         >
-          Daftar
-          <ArrowRight className="size-4" />
+          Daftar Member
         </a>
       </div>
     </header>
@@ -62,142 +64,79 @@ function Nav() {
 
 function Hero() {
   return (
-    <section id="top" className="relative min-h-[100svh] flex items-end pt-24 pb-16 overflow-hidden">
-      <img
-        src={heroImg}
-        alt="Atlet mengangkat barbell di Satrio Gym"
-        width={1920}
-        height={1280}
-        className="absolute inset-0 w-full h-full object-cover"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
-      <div className="absolute inset-0 bg-grid opacity-30" />
+    <section id="top" className="relative pt-16 bg-background">
+      <div className="relative min-h-[88vh] flex items-center overflow-hidden">
+        <img
+          src={heroImg}
+          alt="Satrio Gym training floor"
+          width={1920}
+          height={1280}
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
 
-      <div className="relative max-w-7xl mx-auto px-5 sm:px-8 w-full">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="h-px w-12 bg-primary" />
-          <span className="text-xs sm:text-sm font-bold uppercase tracking-[0.3em] text-primary">
-            Pedurungan · Semarang Timur
-          </span>
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-8 w-full py-20">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-4 w-1 bg-primary" />
+            <span className="text-xs font-bold uppercase tracking-[0.3em] text-primary">
+              Premium Fitness Club
+            </span>
+          </div>
+          <h1 className="font-display text-6xl sm:text-8xl md:text-9xl leading-[0.9] uppercase max-w-4xl">
+            Mulai Langkah <br />
+            <span className="text-primary">Sehatmu</span> Di <br />
+            Satrio Gym
+          </h1>
+          <p className="mt-8 max-w-md text-base sm:text-lg text-muted-foreground">
+            Gym ramah di kantong dengan alat lengkap & berkualitas di kelasnya.
+            Transformasi dimulai di sini dengan intensitas tanpa kompromi.
+          </p>
+          <div className="mt-10 flex flex-col sm:flex-row gap-4">
+            <a
+              href={WA_LINK}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 font-bold text-sm uppercase tracking-widest hover:bg-primary/90 transition"
+            >
+              Daftar Member via WhatsApp
+            </a>
+            <a
+              href="#gallery"
+              className="inline-flex items-center justify-center gap-2 border-2 border-foreground text-foreground px-8 py-4 font-bold text-sm uppercase tracking-widest hover:bg-foreground hover:text-background transition"
+            >
+              Lihat Fasilitas
+            </a>
+          </div>
         </div>
-        <h1 className="font-display text-6xl sm:text-8xl md:text-9xl leading-[0.85] uppercase max-w-5xl">
-          Mulai Langkah <br />
-          <span className="text-primary">Sehatmu</span> <br />
-          <span className="text-stroke">Hari Ini.</span>
-        </h1>
-        <p className="mt-8 max-w-xl text-base sm:text-lg text-muted-foreground">
-          Gym lokal dengan alat lengkap kelas pro, suasana intens, dan harga yang ramah di kantong. Tidak ada drama membership, hanya hasil.
-        </p>
-        <div className="mt-10 flex flex-col sm:flex-row gap-4">
-          <a
-            href={WA_LINK}
-            target="_blank"
-            rel="noreferrer"
-            className="group inline-flex items-center justify-center gap-3 bg-primary text-primary-foreground px-7 py-4 font-display text-xl tracking-wider uppercase hover:bg-primary/90 transition"
-          >
-            <Flame className="size-5" />
-            Daftar via WhatsApp
-          </a>
-          <a
-            href="#contact"
-            className="inline-flex items-center justify-center gap-3 border-2 border-foreground/80 text-foreground px-7 py-4 font-display text-xl tracking-wider uppercase hover:bg-foreground hover:text-background transition"
-          >
-            <MapPin className="size-5" />
-            Tanya Lokasi
-          </a>
-        </div>
+      </div>
 
-        <div className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-px bg-border border border-border max-w-3xl">
-          {[
-            { k: "08–21", v: "Jam Buka" },
-            { k: "5K", v: "Per Visit" },
-            { k: "80K", v: "Bulanan" },
-            { k: "100+", v: "Member Aktif" },
-          ].map((s) => (
-            <div key={s.v} className="bg-background/90 px-5 py-4">
-              <div className="font-display text-3xl text-primary">{s.k}</div>
-              <div className="text-xs uppercase tracking-widest text-muted-foreground mt-1">{s.v}</div>
+      {/* Marquee strip */}
+      <div className="border-y border-border bg-card overflow-hidden py-6">
+        <div className="flex gap-16 marquee whitespace-nowrap">
+          {[...Array(2)].map((_, k) => (
+            <div key={k} className="flex gap-16 shrink-0 pr-16">
+              {["Iron-Strength", "Raw-Power", "Elite-Level", "Urban-Train", "Max-Perform"].map((t) => (
+                <span key={t} className="font-display text-3xl sm:text-4xl uppercase tracking-wider text-muted-foreground/50">
+                  {t}
+                </span>
+              ))}
             </div>
           ))}
         </div>
       </div>
-    </section>
-  );
-}
 
-function About() {
-  const features = [
-    { icon: Dumbbell, t: "Alat Lengkap", d: "Free weights, cable machine, rack, bench, hingga cardio — semua tersedia." },
-    { icon: Clock, t: "Buka 13 Jam", d: "Setiap hari pukul 08.00 – 21.00 WIB. Latihan kapan saja sesuai jadwalmu." },
-    { icon: Users, t: "Komunitas Suportif", d: "Member lokal yang ramah, saling spot, saling dorong. Bukan tempat sombong." },
-    { icon: Zap, t: "Harga Jujur", d: "Mulai Rp 5.000 per visit. Tanpa biaya tersembunyi, tanpa kontrak panjang." },
-  ];
-  return (
-    <section id="about" className="relative py-24 sm:py-32">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8">
-        <div className="grid md:grid-cols-12 gap-10 items-start">
-          <div className="md:col-span-5">
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-primary">// Tentang Kami</span>
-            <h2 className="font-display text-5xl sm:text-6xl uppercase mt-4 leading-[0.9]">
-              Gym yang <br /> Mengerti <br /> <span className="text-primary">Niatmu.</span>
-            </h2>
-          </div>
-          <div className="md:col-span-7 space-y-6">
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              <span className="text-foreground font-semibold">Satrio Gym</span> hadir di tengah Pedurungan, Semarang Timur sebagai tempat latihan yang menggabungkan
-              kualitas alat kelas pro dengan harga yang masuk akal. Kami percaya kebugaran bukan barang mewah —
-              jadi kami buat semua orang bisa masuk dan mulai berlatih.
-            </p>
-            <div className="grid sm:grid-cols-2 gap-px bg-border">
-              {features.map((f) => (
-                <div key={f.t} className="bg-background p-6 border-border">
-                  <f.icon className="size-7 text-primary" strokeWidth={2} />
-                  <h3 className="font-display text-2xl uppercase mt-4">{f.t}</h3>
-                  <p className="text-sm text-muted-foreground mt-2">{f.d}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Gallery() {
-  const items = [
-    { src: g1, h: "Dumbbell Rack", cls: "md:col-span-2 md:row-span-2 aspect-[4/5] md:aspect-auto" },
-    { src: g3, h: "Bench Area", cls: "aspect-square" },
-    { src: g2, h: "Cable Station", cls: "aspect-square" },
-    { src: g4, h: "Squat Rack", cls: "md:col-span-2 aspect-[2/1]" },
-  ];
-  return (
-    <section id="gallery" className="relative py-24 sm:py-32 bg-secondary/30">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-primary">// Galeri Mitra</span>
-            <h2 className="font-display text-5xl sm:text-7xl uppercase mt-3 leading-[0.9]">
-              Lihat <span className="text-primary">Ruang</span> <br /> Latihanmu.
-            </h2>
-          </div>
-          <p className="text-muted-foreground max-w-sm">
-            Suasana intens, alat terawat, dan lighting yang bikin sesi latihanmu makin terasa.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {items.map((it, i) => (
-            <div key={i} className={`relative group overflow-hidden ${it.cls}`}>
-              <img
-                src={it.src}
-                alt={it.h}
-                loading="lazy"
-                className="w-full h-full object-cover transition duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-4 font-display text-xl uppercase tracking-wider">
-                {it.h}
+      {/* Stats */}
+      <div className="bg-background border-b border-border">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-10 grid grid-cols-2 md:grid-cols-3 gap-8">
+          {[
+            { k: "2016", v: "Berdiri Sejak" },
+            { k: "1000+", v: "Member Aktif" },
+            { k: "MODERN", v: "Alat Lengkap & Modern" },
+          ].map((s) => (
+            <div key={s.v}>
+              <div className="font-display text-5xl text-primary">{s.k}</div>
+              <div className="flex items-center gap-2 mt-2 text-xs uppercase tracking-widest text-muted-foreground">
+                <span className="text-primary">|</span> {s.v}
               </div>
             </div>
           ))}
@@ -208,172 +147,164 @@ function Gallery() {
 }
 
 function Pricing() {
-  const plans = [
-    {
-      name: "Member Biasa",
-      tag: "Aktivasi sekali",
-      price: "50.000",
-      sub: "Aktivasi · Berlaku selamanya",
-      visit: "+ Rp 5.000 per visit",
-      features: ["Aktivasi 1x seumur hidup", "Akses semua alat", "Bayar per kunjungan", "Cocok untuk yang fleksibel"],
-      cta: "Daftar Member",
-      highlight: false,
-    },
-    {
-      name: "Member Bulanan",
-      tag: "Paling Hemat",
-      price: "80.000",
-      sub: "Per bulan · Datang sepuasnya",
-      visit: "Unlimited 30 hari",
-      features: ["Akses tanpa batas 1 bulan", "Hemat untuk yang rutin", "Semua alat & fasilitas", "Hemat hingga 60%"],
-      cta: "Ambil Bulanan",
-      highlight: true,
-    },
-  ];
   return (
-    <section id="pricing" className="relative py-24 sm:py-32 overflow-hidden">
-      <div className="absolute inset-0 gradient-radial-primary opacity-40 pointer-events-none" />
-      <div className="relative max-w-7xl mx-auto px-5 sm:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs font-bold uppercase tracking-[0.3em] text-primary">// Pricing</span>
-          <h2 className="font-display text-5xl sm:text-7xl uppercase mt-3 leading-[0.9]">
-            Pilih Paket. <br /> <span className="text-primary">Mulai Sekarang.</span>
+    <section id="pricing" className="relative py-24 sm:py-32 bg-background">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
+        <div className="text-center mb-16">
+          <h2 className="font-display text-5xl sm:text-7xl uppercase tracking-wide">
+            Investasi Kesehatan
           </h2>
-          <p className="text-muted-foreground mt-6">
-            Tidak ada biaya tersembunyi, tidak ada kontrak ribet. Cukup datang dan latihan.
-          </p>
+          <div className="h-1 w-16 bg-primary mx-auto mt-6" />
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          {plans.map((p) => (
-            <div
-              key={p.name}
-              className={`relative border ${
-                p.highlight
-                  ? "border-primary bg-card shadow-[0_0_60px_-20px_var(--color-primary)]"
-                  : "border-border bg-card"
-              } p-8 sm:p-10 flex flex-col`}
-            >
-              {p.highlight && (
-                <div className="absolute -top-3 left-8 bg-primary text-primary-foreground text-xs font-bold uppercase tracking-widest px-3 py-1">
-                  {p.tag}
-                </div>
-              )}
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="font-display text-3xl uppercase">{p.name}</h3>
-                {!p.highlight && (
-                  <span className="text-xs uppercase tracking-widest text-muted-foreground">{p.tag}</span>
-                )}
+          {/* Member Biasa */}
+          <div className="relative border border-border bg-card p-10">
+            <div className="flex items-start justify-between">
+              <div>
+                <h3 className="font-display text-3xl uppercase text-muted-foreground">Member Biasa</h3>
+                <p className="text-sm font-semibold text-muted-foreground mt-1">(Aktivasi)</p>
               </div>
-              <p className="text-sm text-muted-foreground">{p.sub}</p>
-              <div className="my-6 flex items-baseline gap-2">
-                <span className="text-2xl font-bold text-muted-foreground">Rp</span>
-                <span className="font-display text-7xl text-foreground leading-none">{p.price}</span>
-              </div>
-              <div className="text-sm font-semibold text-primary uppercase tracking-wider mb-6">{p.visit}</div>
-              <ul className="space-y-3 mb-8">
-                {p.features.map((f) => (
-                  <li key={f} className="flex items-start gap-3 text-sm">
-                    <Check className="size-5 text-primary shrink-0 mt-0.5" strokeWidth={3} />
-                    <span>{f}</span>
-                  </li>
-                ))}
-              </ul>
-              <a
-                href={WA_LINK}
-                target="_blank"
-                rel="noreferrer"
-                className={`mt-auto inline-flex items-center justify-center gap-2 px-6 py-4 font-display text-lg uppercase tracking-wider transition ${
-                  p.highlight
-                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                    : "border-2 border-foreground hover:bg-foreground hover:text-background"
-                }`}
-              >
-                {p.cta}
-                <ArrowRight className="size-5" />
-              </a>
+              <Dumbbell className="size-8 text-muted-foreground" />
             </div>
-          ))}
+            <div className="my-8 flex items-baseline gap-2">
+              <span className="font-display text-6xl text-primary leading-none">Rp 50.000</span>
+              <span className="text-sm text-muted-foreground">/selamanya</span>
+            </div>
+            <ul className="space-y-3 mb-10">
+              {["Visit cuma Rp 5.000 per sesi", "Masa aktif selamanya", "Akses alat standard lengkap"].map((f) => (
+                <li key={f} className="flex items-center gap-3 text-sm">
+                  <Check className="size-5 text-primary shrink-0" strokeWidth={3} />
+                  <span className="text-foreground">{f}</span>
+                </li>
+              ))}
+            </ul>
+            <a
+              href={WA_LINK}
+              target="_blank"
+              rel="noreferrer"
+              className="block text-center border-2 border-primary text-primary py-4 font-bold text-sm uppercase tracking-widest hover:bg-primary hover:text-primary-foreground transition"
+            >
+              Pilih Paket
+            </a>
+          </div>
+
+          {/* Member Bulanan */}
+          <div className="relative border-2 border-primary bg-card p-10 glow-primary">
+            <div className="absolute -top-px right-0 bg-primary text-primary-foreground text-xs font-bold uppercase tracking-widest px-3 py-1">
+              Paling Populer
+            </div>
+            <div className="flex items-start justify-between">
+              <div>
+                <h3 className="font-display text-3xl uppercase">Member Bulanan</h3>
+                <p className="text-sm font-semibold text-primary mt-1">Full Access</p>
+              </div>
+              <TrendingUp className="size-8 text-primary" />
+            </div>
+            <div className="my-8 flex items-baseline gap-2">
+              <span className="font-display text-6xl leading-none">Rp 80.000</span>
+              <span className="text-sm text-muted-foreground">/bulan</span>
+            </div>
+            <ul className="space-y-3 mb-10">
+              {[
+                "Latihan sepuasnya 1 bulan penuh",
+                "Tanpa biaya visit tambahan",
+                "Free konsultasi awal Coach",
+                "Locker & Shower Access",
+              ].map((f) => (
+                <li key={f} className="flex items-center gap-3 text-sm">
+                  <Check className="size-5 text-primary shrink-0" strokeWidth={3} />
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+            <a
+              href={WA_LINK}
+              target="_blank"
+              rel="noreferrer"
+              className="block text-center bg-primary text-primary-foreground py-4 font-bold text-sm uppercase tracking-widest hover:bg-primary/90 transition"
+            >
+              Daftar Sekarang
+            </a>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function Coaches() {
-  const coaches = [
-    {
-      name: "Coach Rangga",
-      role: "Strength & Hypertrophy",
-      img: coach1,
-      sessions: "8 sesi / bulan",
-      price: "750.000",
-    },
-    {
-      name: "Coach Nadia",
-      role: "Fat Loss & Conditioning",
-      img: coach2,
-      sessions: "8 sesi / bulan",
-      price: "750.000",
-    },
-    {
-      name: "Paket Intensif",
-      role: "Personal Program 1-on-1",
-      img: null,
-      sessions: "12 sesi / bulan",
-      price: "1.100.000",
-    },
+function PersonalTrainer() {
+  const [tab, setTab] = useState<10 | 20>(10);
+  const packages10 = [
+    { name: "Paket PT 1", coach: "Coach Rangga", price: "500.000", icon: Dumbbell, highlight: false },
+    { name: "Paket PT 2", coach: "Coach Nadia", price: "650.000", icon: Dumbbell, highlight: true },
+    { name: "Paket PT 3", coach: "Coach Bima", price: "500.000", icon: TrendingUp, highlight: false },
   ];
+  const packages20 = [
+    { name: "Paket PT 1", coach: "Coach Rangga", price: "950.000", icon: Dumbbell, highlight: false },
+    { name: "Paket PT 2", coach: "Coach Nadia", price: "1.200.000", icon: Dumbbell, highlight: true },
+    { name: "Paket PT 3", coach: "Coach Bima", price: "950.000", icon: TrendingUp, highlight: false },
+  ];
+  const packages = tab === 10 ? packages10 : packages20;
+
   return (
-    <section id="coach" className="relative py-24 sm:py-32 bg-secondary/30">
+    <section id="pt" className="relative py-24 sm:py-32 bg-background border-t border-border">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-14">
           <div>
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-primary">// Personal Trainer</span>
-            <h2 className="font-display text-5xl sm:text-7xl uppercase mt-3 leading-[0.9]">
-              Latihan <span className="text-primary">Terarah</span> <br /> Bareng Coach.
+            <h2 className="font-display text-5xl sm:text-7xl uppercase leading-[0.9]">
+              Berlatih Dengan <br />
+              <span className="text-primary">Profesional</span>
             </h2>
+            <p className="text-muted-foreground mt-6 max-w-lg">
+              Dapatkan bimbingan intensif dari tim pelatih berpengalaman kami untuk mencapai target fisik impianmu lebih cepat dan aman.
+            </p>
           </div>
-          <p className="text-muted-foreground max-w-sm">
-            Mau hasil lebih cepat dan terukur? Pilih coach dan paket sesi yang pas untukmu.
-          </p>
+          <div className="grid grid-cols-2 border border-border">
+            <button
+              onClick={() => setTab(10)}
+              className={`px-6 py-3 text-center transition ${tab === 10 ? "bg-card" : "bg-transparent"}`}
+            >
+              <div className={`font-display text-3xl ${tab === 10 ? "text-primary" : "text-muted-foreground"}`}>10</div>
+              <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Sessions</div>
+            </button>
+            <button
+              onClick={() => setTab(20)}
+              className={`px-6 py-3 text-center border-l border-border transition ${tab === 20 ? "bg-card" : "bg-transparent"}`}
+            >
+              <div className={`font-display text-3xl ${tab === 20 ? "text-primary" : "text-muted-foreground"}`}>20</div>
+              <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Sessions</div>
+            </button>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {coaches.map((c) => (
-            <div key={c.name} className="group border border-border bg-card overflow-hidden flex flex-col">
-              <div className="relative aspect-[4/5] overflow-hidden bg-secondary">
-                {c.img ? (
-                  <img
-                    src={c.img}
-                    alt={c.name}
-                    loading="lazy"
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700 group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-primary/30 to-background">
-                    <Trophy className="size-24 text-primary" strokeWidth={1.5} />
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
+          {packages.map((p) => (
+            <div
+              key={p.name}
+              className={`relative border ${p.highlight ? "border-primary bg-card glow-primary" : "border-border bg-card"} p-8`}
+            >
+              <div className="flex items-start justify-between mb-6">
+                <h3 className="font-display text-2xl uppercase">{p.name}</h3>
+                <p.icon className={`size-7 ${p.highlight ? "text-primary" : "text-muted-foreground/40"}`} />
               </div>
-              <div className="p-6 flex flex-col flex-1">
-                <div className="text-xs uppercase tracking-widest text-primary font-bold">{c.role}</div>
-                <h3 className="font-display text-3xl uppercase mt-2">{c.name}</h3>
-                <div className="mt-4 flex items-center justify-between text-sm border-t border-border pt-4">
-                  <span className="text-muted-foreground">{c.sessions}</span>
-                  <span className="font-display text-2xl">Rp {c.price}</span>
-                </div>
-                <a
-                  href={WA_LINK}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-5 inline-flex items-center justify-center gap-2 border border-foreground/30 hover:bg-primary hover:border-primary hover:text-primary-foreground px-4 py-3 text-sm font-bold uppercase tracking-widest transition"
-                >
-                  Pilih Coach
-                  <ArrowRight className="size-4" />
-                </a>
+              <div className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">{p.coach}</div>
+              <div className="flex items-baseline gap-2 mb-8">
+                <span className="font-display text-4xl">Rp {p.price}</span>
+                <span className="text-xs text-muted-foreground">/{tab} Sesi</span>
               </div>
+              <a
+                href={WA_LINK}
+                target="_blank"
+                rel="noreferrer"
+                className={`block text-center py-3 text-xs font-bold uppercase tracking-widest transition ${
+                  p.highlight
+                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                    : "border border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                }`}
+              >
+                Pilih Paket
+              </a>
             </div>
           ))}
         </div>
@@ -384,29 +315,46 @@ function Coaches() {
 
 function Retail() {
   return (
-    <section className="relative py-20 sm:py-28">
+    <section id="retail" className="relative py-24 sm:py-32 bg-background border-t border-border">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
-        <div className="border border-border bg-card relative overflow-hidden grid md:grid-cols-2 gap-8 p-8 sm:p-12">
-          <div className="absolute -top-20 -right-20 size-72 bg-primary/20 blur-3xl rounded-full pointer-events-none" />
+        <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div className="relative">
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-primary">// Retail Corner</span>
-            <h2 className="font-display text-4xl sm:text-6xl uppercase mt-3 leading-[0.9]">
-              Snack & Minum <br /> <span className="text-primary">Tersedia</span> di Tempat.
-            </h2>
+            <img
+              src={retailImg}
+              alt="Retail corner Satrio Gym"
+              loading="lazy"
+              width={1000}
+              height={1000}
+              className="w-full aspect-square object-cover"
+            />
+            <div className="absolute -bottom-6 -right-6 sm:bottom-8 sm:right-auto sm:left-8 bg-primary text-primary-foreground p-6 max-w-[200px]">
+              <div className="font-display text-2xl uppercase leading-none">
+                Freshly <br /> Stocked <br /> Daily
+              </div>
+            </div>
           </div>
-          <div className="relative space-y-5">
-            <p className="text-muted-foreground text-lg">
-              Lupa bawa minum? Tenang. Satrio Gym menyediakan aneka <span className="text-foreground font-semibold">minuman dingin</span> dan
-              <span className="text-foreground font-semibold"> snack ringan</span> langsung di tempat —
-              jadi kamu bisa fokus latihan tanpa repot mampir minimarket.
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <ShoppingCart className="size-6 text-primary" />
+              <span className="text-sm font-bold uppercase tracking-[0.3em]">Retail Corner</span>
+            </div>
+            <h2 className="font-display text-5xl sm:text-6xl uppercase leading-[0.9]">
+              Sedia Snack & <br />
+              <span className="text-primary">Minuman Dingin.</span>
+            </h2>
+            <p className="text-muted-foreground mt-6 leading-relaxed">
+              Gak perlu repot bawa dari luar, energi tambahan tersedia langsung di area gym. Kami menyediakan
+              berbagai pilihan suplemen, minuman isotonik, dan camilan sehat untuk mendukung performa latihanmu.
             </p>
-            <div className="flex flex-wrap gap-2 pt-2">
-              {["Air Mineral", "Isotonik", "Susu Protein", "Snack", "Energy Drink"].map((t) => (
-                <span key={t} className="inline-flex items-center gap-2 border border-border px-3 py-1.5 text-xs font-semibold uppercase tracking-wider">
-                  <Coffee className="size-3.5 text-primary" />
-                  {t}
-                </span>
-              ))}
+            <div className="mt-8 space-y-3">
+              <div className="flex items-center gap-4 border border-border bg-card p-4">
+                <Coffee className="size-5 text-primary shrink-0" />
+                <span className="text-sm font-bold uppercase tracking-widest">Pre-Workout & Energy Drinks</span>
+              </div>
+              <div className="flex items-center gap-4 border border-border bg-card p-4">
+                <Utensils className="size-5 text-primary shrink-0" />
+                <span className="text-sm font-bold uppercase tracking-widest">Healthy Snacks & Protein Bars</span>
+              </div>
             </div>
           </div>
         </div>
@@ -415,26 +363,66 @@ function Retail() {
   );
 }
 
-function CTABanner() {
+function Location() {
   return (
-    <section className="relative py-20">
+    <section id="gallery" className="relative py-24 sm:py-32 bg-background border-t border-border">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
-        <div className="bg-primary text-primary-foreground p-10 sm:p-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+        <div className="grid md:grid-cols-2 gap-10 items-center">
           <div>
-            <h2 className="font-display text-4xl sm:text-6xl uppercase leading-[0.9]">
-              Siap Angkat <br /> Beban Pertamamu?
+            <h2 className="font-display text-5xl sm:text-7xl uppercase leading-[0.9]">
+              Kunjungi <span className="text-primary">Kami</span>
             </h2>
-            <p className="mt-4 max-w-md opacity-80">Daftar sekarang via WhatsApp. Kami balas cepat dan ramah.</p>
+
+            <div className="mt-10 space-y-8">
+              <div>
+                <div className="text-xs font-bold uppercase tracking-[0.3em] text-primary mb-2">
+                  Jam Operasional
+                </div>
+                <div className="font-display text-3xl">08.00 - 21.00 WIB</div>
+                <div className="text-sm text-muted-foreground mt-1">Setiap Hari (Senin - Minggu)</div>
+              </div>
+
+              <div>
+                <div className="text-xs font-bold uppercase tracking-[0.3em] text-primary mb-2">Lokasi</div>
+                <div className="font-display text-2xl uppercase">Pedurungan, Semarang Timur</div>
+                <div className="text-sm text-muted-foreground mt-1">Fasilitas parkir luas & aman</div>
+              </div>
+
+              <div className="flex gap-3 pt-2">
+                <a
+                  href={MAPS_LINK}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="size-12 grid place-items-center border border-border hover:border-primary hover:text-primary transition"
+                  aria-label="Maps"
+                >
+                  <MapPin className="size-5" />
+                </a>
+                <a
+                  href={WA_LINK}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="size-12 grid place-items-center border border-border hover:border-primary hover:text-primary transition"
+                  aria-label="Phone"
+                >
+                  <Phone className="size-5" />
+                </a>
+              </div>
+            </div>
           </div>
-          <a
-            href={WA_LINK}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-3 bg-background text-foreground px-7 py-4 font-display text-xl uppercase tracking-wider hover:bg-foreground hover:text-background transition"
-          >
-            <Phone className="size-5" />
-            0896 7409 01212
-          </a>
+
+          <div className="aspect-[4/3] border border-border overflow-hidden">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15799.623113351641!2d110.43915708696574!3d-6.983480299999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e708ccf72359b7b%3A0x6599f51a22f8c56!2sSatrio%20Fitness%20Club!5e1!3m2!1sid!2sid!4v1778149032478!5m2!1sid!2sid"
+              width="100%"
+              height="100%"
+              style={{ border: 0, filter: "grayscale(1) contrast(1.1)" }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Lokasi Satrio Gym"
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -443,88 +431,59 @@ function CTABanner() {
 
 function Footer() {
   return (
-    <footer id="contact" className="relative border-t border-border bg-secondary/30 pt-20 pb-10">
+    <footer id="contact" className="bg-background border-t border-border pt-20 pb-10">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
-        <div className="grid lg:grid-cols-2 gap-10 mb-16">
-          <div>
-            <div className="flex items-center gap-2 mb-6">
-              <div className="size-10 grid place-items-center bg-primary text-primary-foreground">
-                <Dumbbell className="size-5" strokeWidth={2.5} />
-              </div>
-              <span className="font-display text-3xl tracking-wider">SATRIO<span className="text-primary">.</span>GYM</span>
-            </div>
-            <p className="text-muted-foreground max-w-md mb-8">
-              Gym lokal di Pedurungan Semarang Timur. Tempat kamu mulai, konsisten, dan jadi versi terbaik dari dirimu.
+        <div className="grid lg:grid-cols-4 gap-10 mb-16">
+          <div className="lg:col-span-1">
+            <div className="font-display text-3xl tracking-wider text-primary mb-4">SATRIO GYM</div>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Menciptakan standar baru dalam fitness dengan harga yang kompetitif tanpa mengurangi kualitas
+              pengalaman berlatih Anda.
             </p>
-            <div className="space-y-4">
-              <a href={WA_LINK} target="_blank" rel="noreferrer" className="flex items-center gap-4 group">
-                <div className="size-11 grid place-items-center border border-border group-hover:border-primary group-hover:text-primary transition">
-                  <Phone className="size-4" />
-                </div>
-                <div>
-                  <div className="text-xs uppercase tracking-widest text-muted-foreground">WhatsApp</div>
-                  <div className="font-semibold">0896 7409 01212</div>
-                </div>
-              </a>
-              <a href="mailto:satriogym@email.com" className="flex items-center gap-4 group">
-                <div className="size-11 grid place-items-center border border-border group-hover:border-primary group-hover:text-primary transition">
-                  <Mail className="size-4" />
-                </div>
-                <div>
-                  <div className="text-xs uppercase tracking-widest text-muted-foreground">Email</div>
-                  <div className="font-semibold">satriogym@email.com</div>
-                </div>
-              </a>
-              <a href={IG_LINK} target="_blank" rel="noreferrer" className="flex items-center gap-4 group">
-                <div className="size-11 grid place-items-center border border-border group-hover:border-primary group-hover:text-primary transition">
-                  <Instagram className="size-4" />
-                </div>
-                <div>
-                  <div className="text-xs uppercase tracking-widest text-muted-foreground">Instagram</div>
-                  <div className="font-semibold">@satriogymsmg</div>
-                </div>
-              </a>
-              <div className="flex items-center gap-4">
-                <div className="size-11 grid place-items-center border border-border">
-                  <MapPin className="size-4" />
-                </div>
-                <div>
-                  <div className="text-xs uppercase tracking-widest text-muted-foreground">Alamat</div>
-                  <div className="font-semibold">Pedurungan, Semarang Timur</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="size-11 grid place-items-center border border-border">
-                  <Clock className="size-4" />
-                </div>
-                <div>
-                  <div className="text-xs uppercase tracking-widest text-muted-foreground">Jam Buka</div>
-                  <div className="font-semibold">08.00 – 21.00 WIB · Setiap Hari</div>
-                </div>
-              </div>
+            <div className="mt-6 text-sm text-muted-foreground">
+              Jam Buka 08.00 - 21.00 WIB (Setiap Hari)
             </div>
           </div>
 
           <div>
-            <div className="text-xs font-bold uppercase tracking-[0.3em] text-primary mb-4">// Lokasi</div>
-            <div className="aspect-video border border-border overflow-hidden">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15799.623113351641!2d110.43915708696574!3d-6.983480299999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e708ccf72359b7b%3A0x6599f51a22f8c56!2sSatrio%20Fitness%20Club!5e1!3m2!1sid!2sid!4v1778149032478!5m2!1sid!2sid"
-                width="100%"
-                height="100%"
-                style={{ border: 0, filter: "invert(0.9) hue-rotate(180deg)" }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Lokasi Satrio Gym"
-              />
-            </div>
+            <div className="text-xs font-bold uppercase tracking-[0.3em] text-primary mb-5">Menu</div>
+            <ul className="space-y-3 text-sm">
+              <li><a href="#top" className="text-primary hover:underline">Home</a></li>
+              <li><a href="#pricing" className="text-primary hover:underline">Pricing</a></li>
+              <li><a href="#pt" className="text-primary hover:underline">Personal Trainer</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div className="text-xs font-bold uppercase tracking-[0.3em] text-primary mb-5">Socials</div>
+            <ul className="space-y-3 text-sm">
+              <li><a href={IG_LINK} target="_blank" rel="noreferrer" className="text-primary hover:underline">Instagram</a></li>
+              <li><a href={WA_LINK} target="_blank" rel="noreferrer" className="text-primary hover:underline">WhatsApp</a></li>
+              <li><a href={MAPS_LINK} target="_blank" rel="noreferrer" className="text-primary hover:underline">Google Maps</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div className="text-xs font-bold uppercase tracking-[0.3em] text-primary mb-5">Contact</div>
+            <ul className="space-y-3 text-sm">
+              <li className="flex items-center gap-2 text-primary">
+                <Mail className="size-4" /> <a href="mailto:satriogym@email.com" className="hover:underline">Email</a>
+              </li>
+              <li className="flex items-center gap-2 text-primary">
+                <Phone className="size-4" /> <a href={WA_LINK} target="_blank" rel="noreferrer" className="hover:underline">WhatsApp</a>
+              </li>
+              <li className="flex items-center gap-2 text-primary">
+                <Instagram className="size-4" /> <a href={IG_LINK} target="_blank" rel="noreferrer" className="hover:underline">@satriogymsmg</a>
+              </li>
+              <li className="flex items-center gap-2 text-primary">
+                <ExternalLink className="size-4" /> <a href={MAPS_LINK} target="_blank" rel="noreferrer" className="hover:underline">Lihat di Maps</a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-          <div>© {new Date().getFullYear()} Satrio Gym. All rights reserved.</div>
-          <div className="font-display uppercase tracking-wider">Train Hard · Stay Humble</div>
+        <div className="border-t border-border pt-6 text-sm text-muted-foreground text-center sm:text-right">
+          © {new Date().getFullYear()} Satrio Gym Pedurungan. All Rights Reserved.
         </div>
       </div>
     </footer>
@@ -537,12 +496,10 @@ function Index() {
       <Nav />
       <main>
         <Hero />
-        <About />
-        <Gallery />
         <Pricing />
-        <Coaches />
+        <PersonalTrainer />
         <Retail />
-        <CTABanner />
+        <Location />
       </main>
       <Footer />
     </div>
