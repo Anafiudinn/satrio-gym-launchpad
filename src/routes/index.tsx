@@ -270,6 +270,7 @@ function Pricing() {
 
 function PersonalTrainer() {
   const [tab, setTab] = useState<10 | 20>(10);
+  const [active, setActive] = useState<string>("Paket PT 2");
   const packages10 = [
     { name: "Paket PT 1", coach: "Coach Rangga", price: "500.000", icon: Dumbbell, highlight: false },
     { name: "Paket PT 2", coach: "Coach Nadia", price: "650.000", icon: Dumbbell, highlight: true },
@@ -315,13 +316,19 @@ function PersonalTrainer() {
 
         <div className="grid md:grid-cols-3 gap-6">
           {packages.map((p) => (
-            <div
+            <button
+              type="button"
               key={p.name}
-              className={`relative border ${p.highlight ? "border-primary bg-card glow-primary" : "border-border bg-card"} p-8`}
+              onClick={() => setActive(p.name)}
+              className={`text-left relative border bg-card p-8 transition-all duration-300 cursor-pointer ${
+                active === p.name
+                  ? "border-primary glow-primary -translate-y-1"
+                  : "border-border hover:border-primary/50 hover:-translate-y-0.5"
+              }`}
             >
               <div className="flex items-start justify-between mb-6">
                 <h3 className="font-display text-2xl uppercase">{p.name}</h3>
-                <p.icon className={`size-7 ${p.highlight ? "text-primary" : "text-muted-foreground/40"}`} />
+                <p.icon className={`size-7 ${active === p.name ? "text-primary" : "text-muted-foreground/40"}`} />
               </div>
               <div className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">{p.coach}</div>
               <div className="flex items-baseline gap-2 mb-8">
@@ -329,18 +336,19 @@ function PersonalTrainer() {
                 <span className="text-xs text-muted-foreground">/{tab} Sesi</span>
               </div>
               <a
-                href={WA_LINK}
+                href={waLink(`Halo Admin, saya ingin booking ${p.name} dengan ${p.coach} (${tab} sesi - Rp ${p.price}). Mohon info jadwalnya.`)}
                 target="_blank"
                 rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
                 className={`block text-center py-3 text-xs font-bold uppercase tracking-widest transition ${
-                  p.highlight
+                  active === p.name
                     ? "bg-primary text-primary-foreground hover:bg-primary/90"
                     : "border border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                 }`}
               >
                 Pilih Paket
               </a>
-            </div>
+            </button>
           ))}
         </div>
       </div>
