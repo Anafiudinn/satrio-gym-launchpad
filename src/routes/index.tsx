@@ -37,10 +37,11 @@ const MAPS_LINK = "https://maps.google.com/?q=Satrio+Fitness+Club+Pedurungan";
 function Nav() {
   const links = [
     { label: "Home", href: "#top" },
+    { label: "Gallery", href: "#gallery" },
     { label: "Pricing", href: "#pricing" },
     { label: "PT", href: "#pt" },
     { label: "Retail", href: "#retail" },
-    { label: "Location", href: "#contact" },
+    { label: "Location", href: "#location" },
   ];
   return (
     <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/80 border-b border-border">
@@ -60,7 +61,7 @@ function Nav() {
           ))}
         </nav>
         <a
-          href={WA_LINK}
+          href={waLink("Halo Admin Satrio Gym, saya tertarik untuk daftar member. Bisa info lebih lanjut?")}
           target="_blank"
           rel="noreferrer"
           className="bg-primary text-primary-foreground px-4 py-2 font-bold uppercase text-xs tracking-widest hover:bg-primary/90 transition"
