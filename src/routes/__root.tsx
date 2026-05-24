@@ -75,11 +75,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Satrio Gym — Gym Ramah Kantong di Pedurungan, Semarang" },
       { name: "description", content: "Satrio Gym Pedurungan Semarang. Alat lengkap, harga ramah kantong. Member harian Rp 5.000, bulanan Rp 80.000. Buka 08.00–21.00." },
       { name: "author", content: "Satrio Gym" },
-      { property: "og:title", content: "Satrio Gym — Pedurungan, Semarang Timur" },
-      { property: "og:description", content: "Gym lokal, alat lengkap, harga bersahabat. Mulai langkah sehatmu hari ini." },
+      { property: "og:title", content: "Satrio Gym — Gym Ramah Kantong di Pedurungan, Semarang" },
+      { property: "og:description", content: "Satrio Gym Pedurungan Semarang. Alat lengkap, harga ramah kantong. Member harian Rp 5.000, bulanan Rp 80.000. Buka 08.00–21.00." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Satrio Gym — Gym Ramah Kantong di Pedurungan, Semarang" },
+      { name: "twitter:description", content: "Satrio Gym Pedurungan Semarang. Alat lengkap, harga ramah kantong. Member harian Rp 5.000, bulanan Rp 80.000. Buka 08.00–21.00." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c7d81056-2f3e-41cb-96f0-0ec2796801ad/id-preview-d17fa8b3--e1987997-b318-41fd-b4c2-f9a289aa7533.lovable.app-1779630391179.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c7d81056-2f3e-41cb-96f0-0ec2796801ad/id-preview-d17fa8b3--e1987997-b318-41fd-b4c2-f9a289aa7533.lovable.app-1779630391179.png" },
     ],
     links: [
       {
