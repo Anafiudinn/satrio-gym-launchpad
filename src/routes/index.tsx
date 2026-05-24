@@ -1,6 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import heroImg from "@/assets/hero-gym.jpg";
+import heroImg from "@/assets/hero-logo.png";
+import gym1 from "@/assets/gym-1.jpg";
+import gym2 from "@/assets/gym-2.jpg";
+import gym3 from "@/assets/gym-3.jpg";
+import gym4 from "@/assets/gym-4.jpg";
 import retailImg from "@/assets/retail.jpg";
 import {
   Dumbbell,
@@ -14,13 +18,19 @@ import {
   Mail,
   Instagram,
   ExternalLink,
+  MessageCircle,
+  X,
+  ChevronDown,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const WA_LINK = "https://wa.me/62896740901212";
+const WA_NUMBER = "6281326619143";
+const WA_LINK = `https://wa.me/${WA_NUMBER}`;
+const waLink = (text: string) =>
+  `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
 const IG_LINK = "https://instagram.com/satriogymsmg";
 const MAPS_LINK = "https://maps.google.com/?q=Satrio+Fitness+Club+Pedurungan";
 
