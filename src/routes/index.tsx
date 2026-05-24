@@ -533,18 +533,176 @@ function Footer() {
   );
 }
 
+function Gallery() {
+  const photos = [
+    { src: gym1, alt: "Area cardio Satrio Gym", span: "md:col-span-2 md:row-span-2" },
+    { src: gym2, alt: "Area free weights & beban", span: "" },
+    { src: gym3, alt: "Lantai atas & area latihan", span: "" },
+    { src: gym4, alt: "Mesin latihan kaki & kardio", span: "md:col-span-2" },
+  ];
+  const [open, setOpen] = useState<string | null>(null);
+  return (
+    <section id="gallery" className="relative py-24 sm:py-32 bg-background border-t border-border">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-4 w-1 bg-primary" />
+              <span className="text-xs font-bold uppercase tracking-[0.3em] text-primary">
+                Galeri Fasilitas
+              </span>
+            </div>
+            <h2 className="font-display text-5xl sm:text-7xl uppercase leading-[0.9]">
+              Lihat <span className="text-primary">Suasana</span> <br /> Gym Kami
+            </h2>
+          </div>
+          <p className="text-muted-foreground max-w-sm">
+            Alat lengkap, ruang lega, dan ventilasi yang nyaman. Klik foto untuk
+            memperbesar.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-3">
+          {photos.map((p) => (
+            <button
+              key={p.src}
+              type="button"
+              onClick={() => setOpen(p.src)}
+              className={`group relative overflow-hidden border border-border bg-card cursor-pointer ${p.span}`}
+            >
+              <img
+                src={p.src}
+                alt={p.alt}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 group-hover:opacity-90"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition" />
+              <div className="absolute bottom-3 left-3 right-3 text-xs uppercase tracking-widest font-bold text-primary opacity-0 group-hover:opacity-100 transition">
+                {p.alt}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {open && (
+        <div
+          onClick={() => setOpen(null)}
+          className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm flex items-center justify-center p-4 cursor-zoom-out"
+        >
+          <button
+            type="button"
+            onClick={() => setOpen(null)}
+            className="absolute top-5 right-5 size-10 grid place-items-center border border-border bg-card text-foreground hover:text-primary"
+            aria-label="Tutup"
+          >
+            <X className="size-5" />
+          </button>
+          <img
+            src={open}
+            alt="Foto Satrio Gym"
+            className="max-w-full max-h-[90vh] object-contain border border-border"
+          />
+        </div>
+      )}
+    </section>
+  );
+}
+
+function FloatingWA() {
+  const [open, setOpen] = useState(false);
+  const templates = [
+    { label: "Tanya Harga & Paket", text: "Halo Admin Satrio Gym, saya mau tanya harga & paket member yang tersedia. Mohon infonya." },
+    { label: "Tanya Lokasi & Arah", text: "Halo Admin Satrio Gym, saya mau tanya alamat lengkap & cara menuju lokasi gym." },
+    { label: "Info Cara Daftar", text: "Halo Admin, saya tertarik daftar member Satrio Gym. Bagaimana cara pendaftarannya?" },
+    { label: "Tanya Personal Trainer", text: "Halo Admin, saya mau tanya paket Personal Trainer di Satrio Gym. Mohon infonya." },
+    { label: "Pertanyaan Lain", text: "Halo Admin Satrio Gym, saya ingin bertanya tentang..." },
+  ];
+  return (
+    <>
+      {open && (
+        <div
+          onClick={() => setOpen(false)}
+          className="fixed inset-0 z-40 bg-background/40 backdrop-blur-[2px] md:hidden"
+        />
+      )}
+      <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3">
+        {open && (
+          <div className="w-[88vw] max-w-[340px] bg-card border border-border shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200">
+            <div className="bg-primary text-primary-foreground p-4 flex items-start gap-3">
+              <div className="size-10 rounded-full bg-primary-foreground/20 grid place-items-center shrink-0">
+                <MessageCircle className="size-5" />
+              </div>
+              <div className="flex-1">
+                <div className="font-display text-lg leading-tight uppercase">Satrio Gym</div>
+                <div className="text-[11px] opacity-80">Biasanya membalas dalam beberapa menit</div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                aria-label="Tutup"
+                className="opacity-80 hover:opacity-100"
+              >
+                <X className="size-4" />
+              </button>
+            </div>
+            <div className="p-4">
+              <p className="text-sm text-muted-foreground mb-3">
+                Halo! 👋 Ada yang ingin ditanyakan? Pilih topik di bawah:
+              </p>
+              <ul className="space-y-2">
+                {templates.map((t) => (
+                  <li key={t.label}>
+                    <a
+                      href={waLink(t.text)}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => setOpen(false)}
+                      className="flex items-center justify-between gap-2 border border-border bg-background hover:border-primary hover:text-primary px-3 py-2.5 text-sm font-semibold transition"
+                    >
+                      <span>{t.label}</span>
+                      <ChevronDown className="size-4 -rotate-90 shrink-0" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-3 text-[10px] uppercase tracking-widest text-muted-foreground text-center">
+                Akan diarahkan ke WhatsApp
+              </p>
+            </div>
+          </div>
+        )}
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-label="Chat WhatsApp"
+          className="relative size-14 rounded-full bg-primary text-primary-foreground grid place-items-center shadow-lg hover:scale-105 transition cursor-pointer"
+        >
+          {!open && (
+            <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-30" />
+          )}
+          {open ? <X className="size-6" /> : <MessageCircle className="size-6" />}
+        </button>
+      </div>
+    </>
+  );
+}
+
 function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
       <Nav />
       <main>
         <Hero />
+        <Gallery />
         <Pricing />
         <PersonalTrainer />
         <Retail />
         <Location />
       </main>
       <Footer />
+      <FloatingWA />
     </div>
   );
 }
