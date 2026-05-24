@@ -81,10 +81,12 @@ function Hero() {
           src={heroImg}
           alt="Satrio Gym training floor"
           width={1920}
-          height={1280}
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
+          height={1080}
+          fetchPriority="high"
+          className="absolute inset-0 w-full h-full object-cover opacity-60"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
+        <div className="absolute inset-0 bg-grid opacity-30" />
 
         <div className="relative max-w-7xl mx-auto px-5 sm:px-8 w-full py-20">
           <div className="flex items-center gap-3 mb-6">
@@ -104,7 +106,7 @@ function Hero() {
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4">
             <a
-              href={WA_LINK}
+              href={waLink("Halo Admin, saya ingin daftar member Satrio Gym. Mohon info paket & lokasinya.")}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 font-bold text-sm uppercase tracking-widest hover:bg-primary/90 transition"
