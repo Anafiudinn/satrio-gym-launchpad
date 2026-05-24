@@ -408,7 +408,7 @@ function Retail() {
 
 function Location() {
   return (
-    <section id="gallery" className="relative py-24 sm:py-32 bg-background border-t border-border">
+    <section id="location" className="relative py-24 sm:py-32 bg-background border-t border-border">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <div>
@@ -442,7 +442,7 @@ function Location() {
                   <MapPin className="size-5" />
                 </a>
                 <a
-                  href={WA_LINK}
+                  href={waLink("Halo Admin, saya mau tanya lokasi & arah ke Satrio Gym.")}
                   target="_blank"
                   rel="noreferrer"
                   className="size-12 grid place-items-center border border-border hover:border-primary hover:text-primary transition"
