@@ -160,6 +160,7 @@ function Hero() {
 }
 
 function Pricing() {
+  const [selected, setSelected] = useState<"basic" | "monthly">("monthly");
   return (
     <section id="pricing" className="relative py-24 sm:py-32 bg-background">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
@@ -168,17 +169,28 @@ function Pricing() {
             Investasi Kesehatan
           </h2>
           <div className="h-1 w-16 bg-primary mx-auto mt-6" />
+          <p className="text-sm text-muted-foreground mt-6">
+            Pilih paketmu — klik kartu untuk melihat detail.
+          </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {/* Member Biasa */}
-          <div className="relative border border-border bg-card p-10">
+          <button
+            type="button"
+            onClick={() => setSelected("basic")}
+            className={`text-left relative border bg-card p-10 transition-all duration-300 cursor-pointer ${
+              selected === "basic"
+                ? "border-primary glow-primary -translate-y-1"
+                : "border-border hover:border-primary/50 hover:-translate-y-0.5"
+            }`}
+          >
             <div className="flex items-start justify-between">
               <div>
-                <h3 className="font-display text-3xl uppercase text-muted-foreground">Member Biasa</h3>
+                <h3 className={`font-display text-3xl uppercase ${selected === "basic" ? "text-foreground" : "text-muted-foreground"}`}>Member Biasa</h3>
                 <p className="text-sm font-semibold text-muted-foreground mt-1">(Aktivasi)</p>
               </div>
-              <Dumbbell className="size-8 text-muted-foreground" />
+              <Dumbbell className={`size-8 ${selected === "basic" ? "text-primary" : "text-muted-foreground"}`} />
             </div>
             <div className="my-8 flex items-baseline gap-2">
               <span className="font-display text-6xl text-primary leading-none">Rp 50.000</span>
@@ -193,17 +205,26 @@ function Pricing() {
               ))}
             </ul>
             <a
-              href={WA_LINK}
+              href={waLink("Halo Admin, saya ingin daftar Member Biasa (aktivasi Rp 50.000). Bagaimana caranya?")}
               target="_blank"
               rel="noreferrer"
+              onClick={(e) => e.stopPropagation()}
               className="block text-center border-2 border-primary text-primary py-4 font-bold text-sm uppercase tracking-widest hover:bg-primary hover:text-primary-foreground transition"
             >
               Pilih Paket
             </a>
-          </div>
+          </button>
 
           {/* Member Bulanan */}
-          <div className="relative border-2 border-primary bg-card p-10 glow-primary">
+          <button
+            type="button"
+            onClick={() => setSelected("monthly")}
+            className={`text-left relative border-2 bg-card p-10 transition-all duration-300 cursor-pointer ${
+              selected === "monthly"
+                ? "border-primary glow-primary -translate-y-1"
+                : "border-border hover:border-primary/50 hover:-translate-y-0.5"
+            }`}
+          >
             <div className="absolute -top-px right-0 bg-primary text-primary-foreground text-xs font-bold uppercase tracking-widest px-3 py-1">
               Paling Populer
             </div>
@@ -232,14 +253,15 @@ function Pricing() {
               ))}
             </ul>
             <a
-              href={WA_LINK}
+              href={waLink("Halo Admin, saya ingin daftar Member Bulanan (Rp 80.000/bulan). Mohon info cara aktivasinya.")}
               target="_blank"
               rel="noreferrer"
+              onClick={(e) => e.stopPropagation()}
               className="block text-center bg-primary text-primary-foreground py-4 font-bold text-sm uppercase tracking-widest hover:bg-primary/90 transition"
             >
               Daftar Sekarang
             </a>
-          </div>
+          </button>
         </div>
       </div>
     </section>
