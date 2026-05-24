@@ -1,6 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import heroImg from "@/assets/hero-gym.jpg";
+import heroImg from "@/assets/hero-logo.png";
+import gym1 from "@/assets/gym-1.jpg";
+import gym2 from "@/assets/gym-2.jpg";
+import gym3 from "@/assets/gym-3.jpg";
+import gym4 from "@/assets/gym-4.jpg";
 import retailImg from "@/assets/retail.jpg";
 import {
   Dumbbell,
@@ -14,23 +18,30 @@ import {
   Mail,
   Instagram,
   ExternalLink,
+  MessageCircle,
+  X,
+  ChevronDown,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const WA_LINK = "https://wa.me/62896740901212";
+const WA_NUMBER = "6281326619143";
+const WA_LINK = `https://wa.me/${WA_NUMBER}`;
+const waLink = (text: string) =>
+  `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
 const IG_LINK = "https://instagram.com/satriogymsmg";
 const MAPS_LINK = "https://maps.google.com/?q=Satrio+Fitness+Club+Pedurungan";
 
 function Nav() {
   const links = [
     { label: "Home", href: "#top" },
+    { label: "Gallery", href: "#gallery" },
     { label: "Pricing", href: "#pricing" },
     { label: "PT", href: "#pt" },
     { label: "Retail", href: "#retail" },
-    { label: "Location", href: "#contact" },
+    { label: "Location", href: "#location" },
   ];
   return (
     <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/80 border-b border-border">
@@ -50,7 +61,7 @@ function Nav() {
           ))}
         </nav>
         <a
-          href={WA_LINK}
+          href={waLink("Halo Admin Satrio Gym, saya tertarik untuk daftar member. Bisa info lebih lanjut?")}
           target="_blank"
           rel="noreferrer"
           className="bg-primary text-primary-foreground px-4 py-2 font-bold uppercase text-xs tracking-widest hover:bg-primary/90 transition"
@@ -70,10 +81,12 @@ function Hero() {
           src={heroImg}
           alt="Satrio Gym training floor"
           width={1920}
-          height={1280}
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
+          height={1080}
+          fetchPriority="high"
+          className="absolute inset-0 w-full h-full object-cover opacity-60"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
+        <div className="absolute inset-0 bg-grid opacity-30" />
 
         <div className="relative max-w-7xl mx-auto px-5 sm:px-8 w-full py-20">
           <div className="flex items-center gap-3 mb-6">
@@ -93,7 +106,7 @@ function Hero() {
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4">
             <a
-              href={WA_LINK}
+              href={waLink("Halo Admin, saya ingin daftar member Satrio Gym. Mohon info paket & lokasinya.")}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 font-bold text-sm uppercase tracking-widest hover:bg-primary/90 transition"
@@ -147,6 +160,7 @@ function Hero() {
 }
 
 function Pricing() {
+  const [selected, setSelected] = useState<"basic" | "monthly">("monthly");
   return (
     <section id="pricing" className="relative py-24 sm:py-32 bg-background">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
@@ -155,17 +169,28 @@ function Pricing() {
             Investasi Kesehatan
           </h2>
           <div className="h-1 w-16 bg-primary mx-auto mt-6" />
+          <p className="text-sm text-muted-foreground mt-6">
+            Pilih paketmu — klik kartu untuk melihat detail.
+          </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {/* Member Biasa */}
-          <div className="relative border border-border bg-card p-10">
+          <button
+            type="button"
+            onClick={() => setSelected("basic")}
+            className={`text-left relative border bg-card p-10 transition-all duration-300 cursor-pointer ${
+              selected === "basic"
+                ? "border-primary glow-primary -translate-y-1"
+                : "border-border hover:border-primary/50 hover:-translate-y-0.5"
+            }`}
+          >
             <div className="flex items-start justify-between">
               <div>
-                <h3 className="font-display text-3xl uppercase text-muted-foreground">Member Biasa</h3>
+                <h3 className={`font-display text-3xl uppercase ${selected === "basic" ? "text-foreground" : "text-muted-foreground"}`}>Member Biasa</h3>
                 <p className="text-sm font-semibold text-muted-foreground mt-1">(Aktivasi)</p>
               </div>
-              <Dumbbell className="size-8 text-muted-foreground" />
+              <Dumbbell className={`size-8 ${selected === "basic" ? "text-primary" : "text-muted-foreground"}`} />
             </div>
             <div className="my-8 flex items-baseline gap-2">
               <span className="font-display text-6xl text-primary leading-none">Rp 50.000</span>
@@ -180,17 +205,26 @@ function Pricing() {
               ))}
             </ul>
             <a
-              href={WA_LINK}
+              href={waLink("Halo Admin, saya ingin daftar Member Biasa (aktivasi Rp 50.000). Bagaimana caranya?")}
               target="_blank"
               rel="noreferrer"
+              onClick={(e) => e.stopPropagation()}
               className="block text-center border-2 border-primary text-primary py-4 font-bold text-sm uppercase tracking-widest hover:bg-primary hover:text-primary-foreground transition"
             >
               Pilih Paket
             </a>
-          </div>
+          </button>
 
           {/* Member Bulanan */}
-          <div className="relative border-2 border-primary bg-card p-10 glow-primary">
+          <button
+            type="button"
+            onClick={() => setSelected("monthly")}
+            className={`text-left relative border-2 bg-card p-10 transition-all duration-300 cursor-pointer ${
+              selected === "monthly"
+                ? "border-primary glow-primary -translate-y-1"
+                : "border-border hover:border-primary/50 hover:-translate-y-0.5"
+            }`}
+          >
             <div className="absolute -top-px right-0 bg-primary text-primary-foreground text-xs font-bold uppercase tracking-widest px-3 py-1">
               Paling Populer
             </div>
@@ -219,14 +253,15 @@ function Pricing() {
               ))}
             </ul>
             <a
-              href={WA_LINK}
+              href={waLink("Halo Admin, saya ingin daftar Member Bulanan (Rp 80.000/bulan). Mohon info cara aktivasinya.")}
               target="_blank"
               rel="noreferrer"
+              onClick={(e) => e.stopPropagation()}
               className="block text-center bg-primary text-primary-foreground py-4 font-bold text-sm uppercase tracking-widest hover:bg-primary/90 transition"
             >
               Daftar Sekarang
             </a>
-          </div>
+          </button>
         </div>
       </div>
     </section>
@@ -235,6 +270,7 @@ function Pricing() {
 
 function PersonalTrainer() {
   const [tab, setTab] = useState<10 | 20>(10);
+  const [active, setActive] = useState<string>("Paket PT 2");
   const packages10 = [
     { name: "Paket PT 1", coach: "Coach Rangga", price: "500.000", icon: Dumbbell, highlight: false },
     { name: "Paket PT 2", coach: "Coach Nadia", price: "650.000", icon: Dumbbell, highlight: true },
@@ -280,13 +316,19 @@ function PersonalTrainer() {
 
         <div className="grid md:grid-cols-3 gap-6">
           {packages.map((p) => (
-            <div
+            <button
+              type="button"
               key={p.name}
-              className={`relative border ${p.highlight ? "border-primary bg-card glow-primary" : "border-border bg-card"} p-8`}
+              onClick={() => setActive(p.name)}
+              className={`text-left relative border bg-card p-8 transition-all duration-300 cursor-pointer ${
+                active === p.name
+                  ? "border-primary glow-primary -translate-y-1"
+                  : "border-border hover:border-primary/50 hover:-translate-y-0.5"
+              }`}
             >
               <div className="flex items-start justify-between mb-6">
                 <h3 className="font-display text-2xl uppercase">{p.name}</h3>
-                <p.icon className={`size-7 ${p.highlight ? "text-primary" : "text-muted-foreground/40"}`} />
+                <p.icon className={`size-7 ${active === p.name ? "text-primary" : "text-muted-foreground/40"}`} />
               </div>
               <div className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">{p.coach}</div>
               <div className="flex items-baseline gap-2 mb-8">
@@ -294,18 +336,19 @@ function PersonalTrainer() {
                 <span className="text-xs text-muted-foreground">/{tab} Sesi</span>
               </div>
               <a
-                href={WA_LINK}
+                href={waLink(`Halo Admin, saya ingin booking ${p.name} dengan ${p.coach} (${tab} sesi - Rp ${p.price}). Mohon info jadwalnya.`)}
                 target="_blank"
                 rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
                 className={`block text-center py-3 text-xs font-bold uppercase tracking-widest transition ${
-                  p.highlight
+                  active === p.name
                     ? "bg-primary text-primary-foreground hover:bg-primary/90"
                     : "border border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                 }`}
               >
                 Pilih Paket
               </a>
-            </div>
+            </button>
           ))}
         </div>
       </div>
@@ -365,7 +408,7 @@ function Retail() {
 
 function Location() {
   return (
-    <section id="gallery" className="relative py-24 sm:py-32 bg-background border-t border-border">
+    <section id="location" className="relative py-24 sm:py-32 bg-background border-t border-border">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <div>
@@ -399,7 +442,7 @@ function Location() {
                   <MapPin className="size-5" />
                 </a>
                 <a
-                  href={WA_LINK}
+                  href={waLink("Halo Admin, saya mau tanya lokasi & arah ke Satrio Gym.")}
                   target="_blank"
                   rel="noreferrer"
                   className="size-12 grid place-items-center border border-border hover:border-primary hover:text-primary transition"
@@ -490,18 +533,176 @@ function Footer() {
   );
 }
 
+function Gallery() {
+  const photos = [
+    { src: gym1, alt: "Area cardio Satrio Gym", span: "md:col-span-2 md:row-span-2" },
+    { src: gym2, alt: "Area free weights & beban", span: "" },
+    { src: gym3, alt: "Lantai atas & area latihan", span: "" },
+    { src: gym4, alt: "Mesin latihan kaki & kardio", span: "md:col-span-2" },
+  ];
+  const [open, setOpen] = useState<string | null>(null);
+  return (
+    <section id="gallery" className="relative py-24 sm:py-32 bg-background border-t border-border">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-4 w-1 bg-primary" />
+              <span className="text-xs font-bold uppercase tracking-[0.3em] text-primary">
+                Galeri Fasilitas
+              </span>
+            </div>
+            <h2 className="font-display text-5xl sm:text-7xl uppercase leading-[0.9]">
+              Lihat <span className="text-primary">Suasana</span> <br /> Gym Kami
+            </h2>
+          </div>
+          <p className="text-muted-foreground max-w-sm">
+            Alat lengkap, ruang lega, dan ventilasi yang nyaman. Klik foto untuk
+            memperbesar.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-3">
+          {photos.map((p) => (
+            <button
+              key={p.src}
+              type="button"
+              onClick={() => setOpen(p.src)}
+              className={`group relative overflow-hidden border border-border bg-card cursor-pointer ${p.span}`}
+            >
+              <img
+                src={p.src}
+                alt={p.alt}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 group-hover:opacity-90"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition" />
+              <div className="absolute bottom-3 left-3 right-3 text-xs uppercase tracking-widest font-bold text-primary opacity-0 group-hover:opacity-100 transition">
+                {p.alt}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {open && (
+        <div
+          onClick={() => setOpen(null)}
+          className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm flex items-center justify-center p-4 cursor-zoom-out"
+        >
+          <button
+            type="button"
+            onClick={() => setOpen(null)}
+            className="absolute top-5 right-5 size-10 grid place-items-center border border-border bg-card text-foreground hover:text-primary"
+            aria-label="Tutup"
+          >
+            <X className="size-5" />
+          </button>
+          <img
+            src={open}
+            alt="Foto Satrio Gym"
+            className="max-w-full max-h-[90vh] object-contain border border-border"
+          />
+        </div>
+      )}
+    </section>
+  );
+}
+
+function FloatingWA() {
+  const [open, setOpen] = useState(false);
+  const templates = [
+    { label: "Tanya Harga & Paket", text: "Halo Admin Satrio Gym, saya mau tanya harga & paket member yang tersedia. Mohon infonya." },
+    { label: "Tanya Lokasi & Arah", text: "Halo Admin Satrio Gym, saya mau tanya alamat lengkap & cara menuju lokasi gym." },
+    { label: "Info Cara Daftar", text: "Halo Admin, saya tertarik daftar member Satrio Gym. Bagaimana cara pendaftarannya?" },
+    { label: "Tanya Personal Trainer", text: "Halo Admin, saya mau tanya paket Personal Trainer di Satrio Gym. Mohon infonya." },
+    { label: "Pertanyaan Lain", text: "Halo Admin Satrio Gym, saya ingin bertanya tentang..." },
+  ];
+  return (
+    <>
+      {open && (
+        <div
+          onClick={() => setOpen(false)}
+          className="fixed inset-0 z-40 bg-background/40 backdrop-blur-[2px] md:hidden"
+        />
+      )}
+      <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3">
+        {open && (
+          <div className="w-[88vw] max-w-[340px] bg-card border border-border shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200">
+            <div className="bg-primary text-primary-foreground p-4 flex items-start gap-3">
+              <div className="size-10 rounded-full bg-primary-foreground/20 grid place-items-center shrink-0">
+                <MessageCircle className="size-5" />
+              </div>
+              <div className="flex-1">
+                <div className="font-display text-lg leading-tight uppercase">Satrio Gym</div>
+                <div className="text-[11px] opacity-80">Biasanya membalas dalam beberapa menit</div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                aria-label="Tutup"
+                className="opacity-80 hover:opacity-100"
+              >
+                <X className="size-4" />
+              </button>
+            </div>
+            <div className="p-4">
+              <p className="text-sm text-muted-foreground mb-3">
+                Halo! 👋 Ada yang ingin ditanyakan? Pilih topik di bawah:
+              </p>
+              <ul className="space-y-2">
+                {templates.map((t) => (
+                  <li key={t.label}>
+                    <a
+                      href={waLink(t.text)}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => setOpen(false)}
+                      className="flex items-center justify-between gap-2 border border-border bg-background hover:border-primary hover:text-primary px-3 py-2.5 text-sm font-semibold transition"
+                    >
+                      <span>{t.label}</span>
+                      <ChevronDown className="size-4 -rotate-90 shrink-0" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-3 text-[10px] uppercase tracking-widest text-muted-foreground text-center">
+                Akan diarahkan ke WhatsApp
+              </p>
+            </div>
+          </div>
+        )}
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-label="Chat WhatsApp"
+          className="relative size-14 rounded-full bg-primary text-primary-foreground grid place-items-center shadow-lg hover:scale-105 transition cursor-pointer"
+        >
+          {!open && (
+            <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-30" />
+          )}
+          {open ? <X className="size-6" /> : <MessageCircle className="size-6" />}
+        </button>
+      </div>
+    </>
+  );
+}
+
 function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
       <Nav />
       <main>
         <Hero />
+        <Gallery />
         <Pricing />
         <PersonalTrainer />
         <Retail />
         <Location />
       </main>
       <Footer />
+      <FloatingWA />
     </div>
   );
 }
