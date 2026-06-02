@@ -269,87 +269,63 @@ function Pricing() {
 }
 
 function PersonalTrainer() {
-  const [tab, setTab] = useState<10 | 20>(10);
-  const [active, setActive] = useState<string>("Paket PT 2");
-  const packages10 = [
-    { name: "Paket PT 1", coach: "Coach Rangga", price: "500.000", icon: Dumbbell, highlight: false },
-    { name: "Paket PT 2", coach: "Coach Nadia", price: "650.000", icon: Dumbbell, highlight: true },
-    { name: "Paket PT 3", coach: "Coach Bima", price: "500.000", icon: TrendingUp, highlight: false },
+  const benefits = [
+    "Program latihan disusun sesuai goal & kondisi tubuhmu",
+    "Bimbingan langsung dari pelatih bersertifikat",
+    "Koreksi teknik agar latihan aman & efektif",
+    "Tersedia paket sesi sesuai kebutuhan",
   ];
-  const packages20 = [
-    { name: "Paket PT 1", coach: "Coach Rangga", price: "950.000", icon: Dumbbell, highlight: false },
-    { name: "Paket PT 2", coach: "Coach Nadia", price: "1.200.000", icon: Dumbbell, highlight: true },
-    { name: "Paket PT 3", coach: "Coach Bima", price: "950.000", icon: TrendingUp, highlight: false },
-  ];
-  const packages = tab === 10 ? packages10 : packages20;
-
   return (
     <section id="pt" className="relative py-24 sm:py-32 bg-background border-t border-border">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-14">
-          <div>
-            <h2 className="font-display text-5xl sm:text-7xl uppercase leading-[0.9]">
-              Berlatih Dengan <br />
-              <span className="text-primary">Profesional</span>
-            </h2>
-            <p className="text-muted-foreground mt-6 max-w-lg">
-              Dapatkan bimbingan intensif dari tim pelatih berpengalaman kami untuk mencapai target fisik impianmu lebih cepat dan aman.
-            </p>
+      <div className="max-w-5xl mx-auto px-5 sm:px-8">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-3 mb-5">
+            <div className="h-4 w-1 bg-primary" />
+            <span className="text-xs font-bold uppercase tracking-[0.3em] text-primary">
+              Personal Trainer
+            </span>
+            <div className="h-4 w-1 bg-primary" />
           </div>
-          <div className="grid grid-cols-2 border border-border">
-            <button
-              onClick={() => setTab(10)}
-              className={`px-6 py-3 text-center transition ${tab === 10 ? "bg-card" : "bg-transparent"}`}
-            >
-              <div className={`font-display text-3xl ${tab === 10 ? "text-primary" : "text-muted-foreground"}`}>10</div>
-              <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Sessions</div>
-            </button>
-            <button
-              onClick={() => setTab(20)}
-              className={`px-6 py-3 text-center border-l border-border transition ${tab === 20 ? "bg-card" : "bg-transparent"}`}
-            >
-              <div className={`font-display text-3xl ${tab === 20 ? "text-primary" : "text-muted-foreground"}`}>20</div>
-              <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Sessions</div>
-            </button>
-          </div>
+          <h2 className="font-display text-5xl sm:text-7xl uppercase leading-[0.9]">
+            Berlatih Dengan <br />
+            <span className="text-primary">Profesional</span>
+          </h2>
+          <p className="text-muted-foreground mt-6 max-w-2xl mx-auto">
+            Satrio Gym menyediakan layanan Personal Trainer untuk membantumu
+            mencapai target — mulai dari pemula yang ingin belajar teknik dasar
+            sampai program lanjutan untuk muscle building & fat loss.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {packages.map((p) => (
-            <button
-              type="button"
-              key={p.name}
-              onClick={() => setActive(p.name)}
-              className={`text-left relative border bg-card p-8 transition-all duration-300 cursor-pointer ${
-                active === p.name
-                  ? "border-primary glow-primary -translate-y-1"
-                  : "border-border hover:border-primary/50 hover:-translate-y-0.5"
-              }`}
+        <div className="border border-border bg-card p-8 sm:p-12">
+          <div className="grid sm:grid-cols-2 gap-5 mb-10">
+            {benefits.map((b) => (
+              <div key={b} className="flex items-start gap-3">
+                <Check className="size-5 text-primary shrink-0 mt-0.5" strokeWidth={3} />
+                <span className="text-sm sm:text-base text-foreground">{b}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="border-t border-border pt-8 flex flex-col sm:flex-row items-center justify-between gap-5">
+            <div className="text-center sm:text-left">
+              <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-1">
+                Info Paket & Harga
+              </div>
+              <div className="font-display text-2xl sm:text-3xl uppercase">
+                Konsultasi Langsung Dengan Admin
+              </div>
+            </div>
+            <a
+              href={waLink("Halo Admin Satrio Gym, saya tertarik dengan layanan Personal Trainer. Mohon info paket, harga, dan jadwal coach yang tersedia.")}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 font-bold text-sm uppercase tracking-widest hover:bg-primary/90 transition whitespace-nowrap"
             >
-              <div className="flex items-start justify-between mb-6">
-                <h3 className="font-display text-2xl uppercase">{p.name}</h3>
-                <p.icon className={`size-7 ${active === p.name ? "text-primary" : "text-muted-foreground/40"}`} />
-              </div>
-              <div className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">{p.coach}</div>
-              <div className="flex items-baseline gap-2 mb-8">
-                <span className="font-display text-4xl">Rp {p.price}</span>
-                <span className="text-xs text-muted-foreground">/{tab} Sesi</span>
-              </div>
-              <a
-                href={waLink(`Halo Admin, saya ingin booking ${p.name} dengan ${p.coach} (${tab} sesi - Rp ${p.price}). Mohon info jadwalnya.`)}
-                target="_blank"
-                rel="noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className={`block text-center py-3 text-xs font-bold uppercase tracking-widest transition ${
-                  active === p.name
-                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                    : "border border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-                }`}
-              >
-                Pilih Paket
-              </a>
-            </button>
-          ))}
+              <MessageCircle className="size-4" />
+              Tanya Admin
+            </a>
+          </div>
         </div>
       </div>
     </section>
