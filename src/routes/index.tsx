@@ -160,10 +160,10 @@ function Hero() {
 }
 
 function Pricing() {
-  const [selected, setSelected] = useState<"basic" | "monthly">("monthly");
+  const [selected, setSelected] = useState<"basic" | "monthly" | "daily">("monthly");
   return (
     <section id="pricing" className="relative py-24 sm:py-32 bg-background">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8">
         <div className="text-center mb-16">
           <h2 className="font-display text-5xl sm:text-7xl uppercase tracking-wide">
             Investasi Kesehatan
@@ -174,12 +174,52 @@ function Pricing() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {/* Daily Visit / Freelance */}
+          <button
+            type="button"
+            onClick={() => setSelected("daily")}
+            className={`text-left relative border bg-card p-8 sm:p-10 transition-all duration-300 cursor-pointer ${
+              selected === "daily"
+                ? "border-primary glow-primary -translate-y-1"
+                : "border-border hover:border-primary/50 hover:-translate-y-0.5"
+            }`}
+          >
+            <div className="flex items-start justify-between">
+              <div>
+                <h3 className={`font-display text-2xl sm:text-3xl uppercase ${selected === "daily" ? "text-foreground" : "text-muted-foreground"}`}>Daily Visit</h3>
+                <p className="text-sm font-semibold text-muted-foreground mt-1">Freelance / Tamu Harian</p>
+              </div>
+              <ExternalLink className={`size-7 sm:size-8 ${selected === "daily" ? "text-primary" : "text-muted-foreground"}`} />
+            </div>
+            <div className="my-6 flex items-baseline gap-2">
+              <span className="font-display text-5xl sm:text-6xl text-primary leading-none">Rp 10.000</span>
+              <span className="text-sm text-muted-foreground">/kunjung</span>
+            </div>
+            <ul className="space-y-3 mb-8">
+              {["Datang Langsung — bayar di tempat", "Akses alat standard lengkap", "Tanpa registrasi member"].map((f) => (
+                <li key={f} className="flex items-center gap-3 text-sm">
+                  <Check className="size-5 text-primary shrink-0" strokeWidth={3} />
+                  <span className="text-foreground">{f}</span>
+                </li>
+              ))}
+            </ul>
+            <a
+              href={waLink("Halo Admin, saya mau latihan harian (Daily Visit Rp 10.000). Apakah bisa datang langsung sekarang?")}
+              target="_blank"
+              rel="noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="block text-center border-2 border-primary text-primary py-3 sm:py-4 font-bold text-sm uppercase tracking-widest hover:bg-primary hover:text-primary-foreground transition"
+            >
+              Datang Langsung
+            </a>
+          </button>
+
           {/* Member Biasa */}
           <button
             type="button"
             onClick={() => setSelected("basic")}
-            className={`text-left relative border bg-card p-10 transition-all duration-300 cursor-pointer ${
+            className={`text-left relative border bg-card p-8 sm:p-10 transition-all duration-300 cursor-pointer ${
               selected === "basic"
                 ? "border-primary glow-primary -translate-y-1"
                 : "border-border hover:border-primary/50 hover:-translate-y-0.5"
@@ -187,17 +227,17 @@ function Pricing() {
           >
             <div className="flex items-start justify-between">
               <div>
-                <h3 className={`font-display text-3xl uppercase ${selected === "basic" ? "text-foreground" : "text-muted-foreground"}`}>Member Biasa</h3>
+                <h3 className={`font-display text-2xl sm:text-3xl uppercase ${selected === "basic" ? "text-foreground" : "text-muted-foreground"}`}>Member Biasa</h3>
                 <p className="text-sm font-semibold text-muted-foreground mt-1">(Aktivasi)</p>
               </div>
-              <Dumbbell className={`size-8 ${selected === "basic" ? "text-primary" : "text-muted-foreground"}`} />
+              <Dumbbell className={`size-7 sm:size-8 ${selected === "basic" ? "text-primary" : "text-muted-foreground"}`} />
             </div>
-            <div className="my-8 flex items-baseline gap-2">
-              <span className="font-display text-6xl text-primary leading-none">Rp 50.000</span>
+            <div className="my-6 flex items-baseline gap-2">
+              <span className="font-display text-5xl sm:text-6xl text-primary leading-none">Rp 50.000</span>
               <span className="text-sm text-muted-foreground">/selamanya</span>
             </div>
-            <ul className="space-y-3 mb-10">
-              {["Visit cuma Rp 5.000 per sesi", "Masa aktif selamanya", "Akses alat standard lengkap"].map((f) => (
+            <ul className="space-y-3 mb-8">
+              {["Dapat Member Code", "Visit cuma Rp 5.000 per sesi", "Masa aktif selamanya", "Akses alat standard lengkap"].map((f) => (
                 <li key={f} className="flex items-center gap-3 text-sm">
                   <Check className="size-5 text-primary shrink-0" strokeWidth={3} />
                   <span className="text-foreground">{f}</span>
@@ -209,7 +249,7 @@ function Pricing() {
               target="_blank"
               rel="noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="block text-center border-2 border-primary text-primary py-4 font-bold text-sm uppercase tracking-widest hover:bg-primary hover:text-primary-foreground transition"
+              className="block text-center border-2 border-primary text-primary py-3 sm:py-4 font-bold text-sm uppercase tracking-widest hover:bg-primary hover:text-primary-foreground transition"
             >
               Pilih Paket
             </a>
@@ -219,7 +259,7 @@ function Pricing() {
           <button
             type="button"
             onClick={() => setSelected("monthly")}
-            className={`text-left relative border-2 bg-card p-10 transition-all duration-300 cursor-pointer ${
+            className={`text-left relative border-2 bg-card p-8 sm:p-10 transition-all duration-300 cursor-pointer ${
               selected === "monthly"
                 ? "border-primary glow-primary -translate-y-1"
                 : "border-border hover:border-primary/50 hover:-translate-y-0.5"
@@ -230,17 +270,18 @@ function Pricing() {
             </div>
             <div className="flex items-start justify-between">
               <div>
-                <h3 className="font-display text-3xl uppercase">Member Bulanan</h3>
+                <h3 className="font-display text-2xl sm:text-3xl uppercase">Member Bulanan</h3>
                 <p className="text-sm font-semibold text-primary mt-1">Full Access</p>
               </div>
-              <TrendingUp className="size-8 text-primary" />
+              <TrendingUp className="size-7 sm:size-8 text-primary" />
             </div>
-            <div className="my-8 flex items-baseline gap-2">
-              <span className="font-display text-6xl leading-none">Rp 80.000</span>
+            <div className="my-6 flex items-baseline gap-2">
+              <span className="font-display text-5xl sm:text-6xl leading-none">Rp 80.000</span>
               <span className="text-sm text-muted-foreground">/bulan</span>
             </div>
-            <ul className="space-y-3 mb-10">
+            <ul className="space-y-3 mb-8">
               {[
+                "Dapat Member Code",
                 "Latihan sepuasnya 1 bulan penuh",
                 "Tanpa biaya visit tambahan",
                 "Free konsultasi awal Coach",
@@ -257,7 +298,7 @@ function Pricing() {
               target="_blank"
               rel="noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="block text-center bg-primary text-primary-foreground py-4 font-bold text-sm uppercase tracking-widest hover:bg-primary/90 transition"
+              className="block text-center bg-primary text-primary-foreground py-3 sm:py-4 font-bold text-sm uppercase tracking-widest hover:bg-primary/90 transition"
             >
               Daftar Sekarang
             </a>
